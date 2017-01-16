@@ -8,7 +8,7 @@ buffered: buffered.c
 	${MPICC} -o buffered buffered.c
 
 exec:
-	mpirun -n 2 ./buffered
+	mpirun -n 4 ./buffered
 
 clean:
 	rm -f ${EXECS}
