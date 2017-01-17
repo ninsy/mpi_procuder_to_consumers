@@ -1,6 +1,6 @@
 EXECS=buffered
 RUNS=exec
-MPICC?=mpicc
+MPICC?=mpic++
 
 all: ${EXECS} ${RUNS}
 
