@@ -1,14 +1,15 @@
-EXECS=buffered
+EXECS=solution
 RUNS=exec
 MPICC?=mpic++
+PROC_COUNT=6
 
 all: ${EXECS} ${RUNS}
 
-buffered: buffered.c
-	${MPICC} -o buffered buffered.c
+solution: better_solution.cpp
+	${MPICC} -std=c++11 -o better_solution better_solution.cpp
 
 exec:
-	mpirun -n 4 ./buffered
+	mpirun -n ${PROC_COUNT} ./better_solution
 
 clean:
 	rm -f ${EXECS}
