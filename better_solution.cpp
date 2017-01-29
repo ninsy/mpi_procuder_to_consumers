@@ -1,7 +1,7 @@
 #define PLATFORM_WINDOWS  1
 #define PLATFORM_LINUX    2
 
-#ifdef MSWINDOWS
+#ifdef _WIN32
   #define PLATFORM PLATFORM_WINDOWS
 #else
   #define PLATFORM PLATFORM_LINUX
