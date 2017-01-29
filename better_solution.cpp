@@ -1,10 +1,25 @@
+#define PLATFORM_WINDOWS  1
+#define PLATFORM_LINUX    2
+
+#ifdef MSWINDOWS
+  #define PLATFORM PLATFORM_WINDOWS
+#else
+  #define PLATFORM PLATFORM_LINUX
+#endif
+
 #include <mpi.h>
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <math.h>
 #include <queue>
 #include <vector>
+
+#if PLATFORM == PLATFORM_LINUX
+  #include <unistd.h>
+#elif PLATFORM == PLATFORM_WINDOWS
+  #include <windows.h>
+#endif
 
 #define MAX_NUMBERS 5
 
@@ -36,7 +51,7 @@ void receiveMessages(vector<int>& v, int source, int tag, int messageCount) {
 
 void producerActiveLoop(int &itemCnt, vector<int> &i) {
   while (true) {
-    itemCnt = (rand() / (float)RAND_MAX) * MAX_NUMBERS;
+    itemCnt = round(rand() % MAX_NUMBERS);
     if(!itemCnt) {
       vector<int> targets = {1};
       sendKillMessage(targets);
@@ -98,7 +113,13 @@ void consumerActiveLoop(int &itemCtn, vector<int> &i) {
       }
       cout << "]." << endl;
       i.clear();
-      sleep( (rand() / (float)RAND_MAX) * 10 + 1 );
+      #if PLATFORM == PLATFORM_WINDOWS
+      Sleep(round(rand() % 5000));
+      #else
+      sleep( (rand() / (float)RAND_MAX) * 5 + 1 );
+      #endif
+
+
     }
   }
 }
